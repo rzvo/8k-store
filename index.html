@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8K SHOP | FUTURE OF FORZA 🏎️✨</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-purple: #7000ff;
+            --dark: #020205;
+            --card-bg: rgba(255, 255, 255, 0.02);
+        }
+
+        #cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: var(--neon-blue); border-radius: 50%; pointer-events: none; z-index: 10000; }
+        #cursor-outline { position: fixed; top: 0; left: 0; width: 40px; height: 40px; border: 2px solid var(--neon-blue); border-radius: 50%; pointer-events: none; z-index: 9999; box-shadow: 0 0 15px var(--neon-blue); will-change: transform; }
+
+        body {
+            font-family: 'Cairo', sans-serif; background-color: var(--dark);
+            color: #fff; margin: 0; overflow-x: hidden; cursor: none;
+            background: radial-gradient(circle at center, #080b1a 0%, #020205 100%);
+        }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+
+        .hero { height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .hero h1 { 
+            font-size: clamp(4rem, 12vw, 8rem); font-weight: 900; margin: 0; 
+            color: transparent; -webkit-text-stroke: 1px var(--neon-blue);
+            filter: drop-shadow(0 0 20px var(--neon-blue)); animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse { from { opacity: 0.5; } to { opacity: 1; text-shadow: 0 0 30px var(--neon-blue); } }
+
+        .container { max-width: 900px; margin: 0 auto 50px; padding: 20px; }
+
+        .features-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
+            background: rgba(0, 242, 255, 0.03); padding: 25px; border-radius: 20px;
+            border: 1px solid rgba(0, 242, 255, 0.1); margin-bottom: 60px; backdrop-filter: blur(10px);
+        }
+        .f-box { text-align: center; }
+        .f-box i { font-size: 1.8rem; color: var(--neon-blue); margin-bottom: 8px; display: block; filter: drop-shadow(0 0 5px var(--neon-blue)); }
+        .f-box h4 { font-size: 0.9rem; margin: 0; font-weight: 700; }
+        .f-box p { font-size: 0.7rem; color: #777; margin: 5px 0 0; }
+
+        .product-list { display: flex; flex-direction: column; gap: 50px; }
+        .p-card {
+            display: flex; background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 35px; overflow: hidden; align-items: center;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative;
+        }
+        .p-card:hover { border-color: var(--neon-blue); box-shadow: 0 0 40px rgba(0, 242, 255, 0.1); transform: translateY(-5px); }
+        .p-img { width: 350px; height: 250px; overflow: hidden; }
+        .p-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .p-card:hover .p-img img { transform: scale(1.1) rotate(2deg); }
+        .p-details { padding: 40px; flex: 1; }
+        .p-details h3 { font-size: 1.8rem; margin: 0; }
+        .price-row { display: flex; align-items: baseline; gap: 15px; margin: 20px 0; }
+        .p-old { color: #ff3366; text-decoration: line-through; font-size: 1.1rem; opacity: 0.6; }
+        .p-new { color: var(--neon-blue); font-size: 2.5rem; font-weight: 900; }
+
+        .counter-box { display: flex; align-items: center; gap: 20px; background: rgba(255,255,255,0.03); padding: 10px 25px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); width: fit-content; }
+        .c-btn { background: none; border: none; color: var(--neon-blue); font-size: 1.8rem; cursor: pointer; }
+        .c-num { font-size: 1.5rem; font-weight: bold; min-width: 30px; text-align: center; }
+
+        .footer-info {
+            background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 40px 20px 150px; text-align: center;
+        }
+        .info-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: right; }
+        .info-section h5 { color: var(--neon-blue); font-size: 1.1rem; margin-bottom: 15px; }
+        .info-section p { font-size: 0.85rem; color: #888; line-height: 1.8; margin: 0; }
+
+        .rights { margin-top: 40px; font-size: 0.8rem; color: #555; }
+
+        .checkout-bar {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            width: 85%; max-width: 600px; background: rgba(5,5,10,0.9); backdrop-filter: blur(20px);
+            border: 1px solid var(--neon-blue); border-radius: 100px; padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1001;
+        }
+        .order-now { background: var(--neon-blue); color: #000; border: none; padding: 12px 40px; border-radius: 50px; font-weight: 900; cursor: pointer; }
+
+        #custom-alert {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(5, 5, 10, 0.95); border: 2px solid var(--neon-blue);
+            padding: 30px; border-radius: 20px; z-index: 20000; text-align: center;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2); backdrop-filter: blur(10px);
+        }
+        #custom-alert p { font-weight: bold; margin-bottom: 20px; color: #fff; }
+        #custom-alert button { background: var(--neon-blue); border: none; padding: 10px 30px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
+        @media (max-width: 768px) { 
+            .p-card { flex-direction: column; } .p-img { width: 100%; } 
+            .info-grid { grid-template-columns: 1fr; }
+            .features-row { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-outline"></div>
+<div id="particles-js"></div>
+
+<div id="custom-alert">
+    <p id="alert-text">الرجاء اختيار خدمة اولاً قبل الطلب</p>
+    <button onclick="document.getElementById('custom-alert').style.display='none'">حسناً</button>
+</div>
+
+<div class="hero">
+    <h1 data-aos="zoom-out">8K SHOP</h1>
+    <p style="color: var(--neon-blue); letter-spacing: 3px; font-weight: bold;">خدمات فورزا الحصرية</p>
+</div>
+
+<div class="container">
+    <div class="features-row" data-aos="fade-up">
+        <div class="f-box"><i>⚡</i><h4>الأسرع تنفيذ</h4><p>30 دقيقة - 5 ساعات</p></div>
+        <div class="f-box"><i>🛡</i><h4>أمان كامل</h4><p>ضد الباند 100%</p></div>
+        <div class="f-box"><i>🔄</i><h4>دعم فني</h4><p>متواجدين دائماً</p></div>
+        <div class="f-box"><i>⭐</i><h4>أفضل سعر</h4><p>تحدي الأسعار</p></div>
+    </div>
+
+    <div class="product-list">
+        <div class="p-card" data-aos="fade-left" data-name="50M Credits" data-price="5">
+            <div class="p-img"><img src="https://cdn.discordapp.com/attachments/1481695163251429376/1485673332320763984/imageedit_2_4267288135.png?ex=69c2b89c&is=69c1671c&hm=fd06d92f79bb6a91080c37ad7a88273d90c64eecda9e8f07c60aa2c3ff305ea6"></div>
+            <div class="p-details">
+                <h3>حزمة الـ 50 مليون</h3>
+                <p>جميع الكريدت يتم تسليمها خارج الحساب لضمان حقك</p>
+                <div class="price-row"><span class="p-old">8 ريال</span><span class="p-new">5 ريال</span></div>
+                <div class="counter-box">
+                    <button class="c-btn" onclick="update(this, -1)">-</button>
+                    <span class="c-num">0</span>
+                    <button class="c-btn" onclick="update(this, 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-card" data-aos="fade-right" data-name="Apollo Special" data-price="11">
+            <div class="p-img">
+                <img src="https://cdn.discordapp.com/attachments/1481695163251429376/1485669021801123860/Screenshot_2026-03-23_185827.png?ex=69c2b499&is=69c16319&hm=c4d72732c4ab40511b9db366676222739003282934c53126839b10c48618dbc4">
+            </div>
+            <div class="p-details">
+                <h3>ابولو نسخه خاصه</h3>
+                <p>تعديل خاص جدا</p>
+                <div class="price-row"><span class="p-old">15 ريال</span><span class="p-new">11 ريال</span></div>
+                <div class="counter-box">
+                    <button class="c-btn" onclick="update(this, -1)">-</button>
+                    <span class="c-num">0</span>
+                    <button class="c-btn" onclick="update(this, 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-card" data-aos="fade-up" style="border: 2px solid var(--neon-purple);" data-name="Max Out Account (VIP)" data-price="39" data-limit="1">
+            <div class="p-img"><img src="https://cdn.discordapp.com/attachments/1481695163251429376/1485673300519682170/MixCollage-23-Mar-2026-07-15-PM-9821.jpg?ex=69c2b895&is=69c16715&hm=8cd3d8c05e4b5dbc0bfb25a4fe1501b70ad502dd9951e0e73da0a625e0952d1e"></div>
+            <div class="p-details">
+                <h3 style="color: var(--neon-purple);">التمكيس الشامل (VIP)</h3>
+                <p>العرض المتكامل: سوبر رول سبين + رول سبين لا نهائي + 500 مليون كريدت + 8 سيارات نادرة</p>
+                <div class="price-row"><span class="p-old">50 ريال</span><span class="p-new">39 ريال</span></div>
+                <div class="counter-box">
+                    <button class="c-btn" onclick="update(this, -1)">-</button>
+                    <span class="c-num">0</span>
+                    <button class="c-btn" onclick="update(this, 1)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-info">
+    <div class="info-grid">
+        <div class="info-section" data-aos="fade-up">
+            <h5>الشروط والقوانين</h5>
+            <p>• يمنع منعاً باتاً إلغاء الطلب أو استرجاع المبلغ بعد عملية الدفع.</p>
+            <p>• يجب على العميل التأكد من صحة بيانات حسابه قبل الطلب.</p>
+            <p>• المتجر غير مسؤول عن أي خطأ ناتج من تزويدنا ببيانات خاطئة.</p>
+        </div>
+        <div class="info-section" data-aos="fade-up" data-aos-delay="100">
+            <h5>توضيح الخدمة</h5>
+            <p>• مدة تنفيذ الطلب تتراوح من 30 دقيقة إلى 5 ساعات كحد أقصى.</p>
+            <p>• خدماتنا آمنة تماماً ومجربة على مئات الحسابات.</p>
+        </div>
+    </div>
+    <div class="rights">
+        جميع الحقوق محفوظة لمتجر 8K SHOP © 2026<br>
+        Powered by Discord: <span style="color: var(--neon-blue);">9yyv</span>
+    </div>
+</footer>
+
+<div class="checkout-bar">
+    <div style="font-size: 1.1rem;">الإجمالي: <span id="total" style="color: var(--neon-blue); font-weight: 900; font-size: 1.8rem;">0</span> ريال</div>
+    <button class="order-now" onclick="sendOrder()">إتمام الطلب</button>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    particlesJS('particles-js', { particles: { number: { value: 60 }, color: { value: "#00f2ff" }, opacity: { value: 0.2 }, move: { speed: 2 } } });
+
+    const dot = document.getElementById('cursor-dot');
+    const outline = document.getElementById('cursor-outline');
+    let mx = 0, my = 0, ox = 0, oy = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function anim() {
+        dot.style.transform = `translate(${mx}px, ${my}px)`;
+        ox += (mx - ox) * 0.15; oy += (my - oy) * 0.15;
+        outline.style.transform = `translate(${ox - 20}px, ${oy - 20}px)`;
+        requestAnimationFrame(anim);
+    }
+    anim();
+
+    let cart = {};
+
+    function update(btn, chg) {
+        const card = btn.closest('.p-card');
+        const name = card.getAttribute('data-name');
+        const price = parseInt(card.getAttribute('data-price'));
+        const limit = card.getAttribute('data-limit');
+        const val = btn.parentElement.querySelector('.c-num');
+        
+        let count = parseInt(val.innerText) + chg;
+        
+        if (count < 0) count = 0;
+        if (limit && count > parseInt(limit)) return;
+
+        val.innerText = count;
+        
+        if (count > 0) {
+            cart[name] = { total_price: count * price, quantity: count };
+        } else {
+            delete cart[name];
+        }
+
+        let tot = 0;
+        for (let k in cart) tot += cart[k].total_price;
+        document.getElementById('total').innerText = tot;
+    }
+
+    function sendOrder() {
+        const totalAmount = document.getElementById('total').innerText;
+        if (totalAmount === "0") {
+            document.getElementById('alert-text').innerText = "الرجاء اختيار خدمة اولاً قبل الطلب";
+            document.getElementById('custom-alert').style.display = 'block';
+            return;
+        }
+        localStorage.setItem('8k_cart', JSON.stringify(cart));
+        localStorage.setItem('8k_total', totalAmount);
+        window.location.href = 'checkout.html';
+    }
+</script>
+</body>
+</html>
