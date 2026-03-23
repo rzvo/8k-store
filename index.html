@@ -178,7 +178,6 @@
             <h5>الشروط والقوانين</h5>
             <p>• يمنع منعاً باتاً إلغاء الطلب أو استرجاع المبلغ بعد عملية الدفع.</p>
             <p>• يجب على العميل التأكد من صحة بيانات حسابه قبل الطلب.</p>
-            <p>• المتجر غير مسؤول عن أي خطأ ناتج من تزويدنا ببيانات خاطئة.</p>
         </div>
         <div class="info-section" data-aos="fade-up" data-aos-delay="100">
             <h5>توضيح الخدمة</h5>
@@ -225,7 +224,6 @@
         const val = btn.parentElement.querySelector('.c-num');
         
         let count = parseInt(val.innerText) + chg;
-        
         if (count < 0) count = 0;
         if (limit && count > parseInt(limit)) return;
 
@@ -242,15 +240,21 @@
         document.getElementById('total').innerText = tot;
     }
 
+    // الدالة المسؤولة عن نقل البيانات لصفحة الدفع
     function sendOrder() {
         const totalAmount = document.getElementById('total').innerText;
+        
         if (totalAmount === "0") {
             document.getElementById('alert-text').innerText = "الرجاء اختيار خدمة اولاً قبل الطلب";
             document.getElementById('custom-alert').style.display = 'block';
             return;
         }
+
+        // حفظ البيانات بأسماء مطابقة لصفحة الدفع
         localStorage.setItem('8k_cart', JSON.stringify(cart));
         localStorage.setItem('8k_total', totalAmount);
+
+        // التوجه لصفحة الدفع
         window.location.href = 'checkout.html';
     }
 </script>
