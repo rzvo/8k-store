@@ -6,15 +6,65 @@
     <title>8K SHOP | إتمام الدفع 💳</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-blue: #00f2ff; --dark: #020205; }
-        body { font-family: 'Cairo', sans-serif; background: var(--dark); color: #fff; margin: 0; padding: 20px; text-align: center; }
-        .pay-container { max-width: 600px; margin: 40px auto; background: rgba(255,255,255,0.02); border: 1px solid var(--neon-blue); padding: 30px; border-radius: 25px; box-shadow: 0 0 30px rgba(0,242,255,0.1); }
-        .summary { text-align: right; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .iban-box { background: #000; border: 1px dashed var(--neon-blue); padding: 15px; border-radius: 10px; margin: 20px 0; cursor: pointer; }
-        .iban-box:active { background: #111; }
-        input[type="file"] { margin: 20px 0; color: var(--neon-blue); }
-        .confirm-btn { background: var(--neon-blue); color: #000; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.1rem; }
-        .step { color: var(--neon-blue); font-weight: bold; margin-top: 20px; display: block; }
+        :root { 
+            --neon-blue: #00f2ff; 
+            --dark: #020205; 
+            --card-bg: rgba(255, 255, 255, 0.03);
+        }
+        body { 
+            font-family: 'Cairo', sans-serif; 
+            background: radial-gradient(circle at center, #080b1a 0%, #020205 100%); 
+            color: #fff; margin: 0; padding: 20px; text-align: center; min-height: 100vh;
+        }
+        .pay-container { 
+            max-width: 550px; margin: 40px auto; 
+            background: var(--card-bg); 
+            border: 1px solid var(--neon-blue); 
+            padding: 30px; border-radius: 30px; 
+            box-shadow: 0 0 40px rgba(0,242,255,0.1); 
+            backdrop-filter: blur(15px);
+        }
+        h2 { font-weight: 900; color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        
+        .summary-box { 
+            text-align: right; background: rgba(255,255,255,0.05); 
+            padding: 20px; border-radius: 20px; margin: 20px 0; 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .iban-box { 
+            background: #000; border: 1px dashed var(--neon-blue); 
+            padding: 20px; border-radius: 15px; margin: 25px 0; 
+            cursor: pointer; transition: 0.3s;
+        }
+        .iban-box:hover { background: rgba(0, 242, 255, 0.05); }
+        .iban-box small { color: #888; display: block; margin-bottom: 5px; }
+        #iban-text { font-family: monospace; font-size: 1.2rem; letter-spacing: 1px; color: var(--neon-blue); margin: 10px 0; }
+
+        .step-label { 
+            display: block; margin-top: 25px; font-weight: bold; 
+            color: var(--neon-blue); font-size: 1.1rem; 
+        }
+
+        input[type="file"] { 
+            margin: 15px 0; background: rgba(255,255,255,0.05); 
+            padding: 10px; border-radius: 10px; width: 90%; color: #888;
+        }
+
+        .confirm-btn { 
+            background: var(--neon-blue); color: #000; border: none; 
+            padding: 18px; border-radius: 50px; font-weight: 900; 
+            cursor: pointer; width: 100%; font-size: 1.2rem; 
+            margin-top: 20px; box-shadow: 0 5px 20px rgba(0,242,255,0.3);
+            transition: 0.3s;
+        }
+        .confirm-btn:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+        .back-link { 
+            display: inline-block; margin-top: 20px; color: #666; 
+            text-decoration: none; font-size: 0.9rem; 
+        }
+        .back-link:hover { color: var(--neon-blue); }
     </style>
 </head>
 <body>
@@ -22,58 +72,85 @@
 <div class="pay-container">
     <h2>فاتورة الطلب 🧾</h2>
     
-    <div class="summary" id="order-summary">
+    <div class="summary-box" id="order-summary">
         </div>
 
-    <hr style="border: 0.5px solid rgba(0,242,255,0.2);">
-
-    <span class="step">الخطوة 1: حول المبلغ للحساب التالي</span>
+    <span class="step-label">1️⃣ حول المبلغ للحساب التالي:</span>
     <div class="iban-box" onclick="copyIBAN()">
-        <small>اضغط للنسخ 📋</small>
+        <small>اضغط هنا لنسخ الآيبان 📋</small>
         <p id="iban-text">SA00 0000 0000 0000 0000 0000</p>
-        <strong>الاسم: [اكتب اسمك هنا]</strong>
+        <strong style="color: #fff;">الاسم: [اكتب اسمك هنا]</strong>
     </div>
 
-    <span class="step">الخطوة 2: ارفق صورة الإيصال</span>
+    <span class="step-label">2️⃣ ارفق صورة إيصال التحويل:</span>
     <input type="file" id="receipt" accept="image/*">
 
-    <button class="confirm-btn" onclick="finishPayment()">تأكيد وإرسال عبر واتساب</button>
+    <button class="confirm-btn" onclick="finishPayment()">تأكيد الطلب عبر واتساب ✅</button>
+    
+    <a href="index.html" class="back-link">← العودة لتعديل الطلب</a>
 </div>
 
 <script>
-    // جلب البيانات من الصفحة السابقة
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    const total = localStorage.getItem('total');
+    // جلب البيانات المخزنة من الصفحة الأساسية
+    const cart = JSON.parse(localStorage.getItem('8k_cart')) || {};
+    const total = localStorage.getItem('8k_total') || "0";
     const summaryDiv = document.getElementById('order-summary');
 
-    if (!cart) { window.location.href = 'index.html'; }
+    let summaryText = "طلبي من 8K SHOP:\n";
+    let hasItems = false;
 
-    let summaryText = "الخدمات المختارة:\n";
+    // عرض الخدمات المختارة
     for (let k in cart) {
+        hasItems = true;
         let qty = cart[k].quantity > 1 ? ` x${cart[k].quantity}` : "";
-        summaryDiv.innerHTML += `<p>• ${k}${qty} - <span style="color:var(--neon-blue)">${cart[k].total_price} ريال</span></p>`;
+        summaryDiv.innerHTML += `
+            <div style="display:flex; justify-content:space-between; margin:10px 0;">
+                <span>• ${k}${qty}</span>
+                <span style="color:var(--neon-blue)">${cart[k].total_price} ريال</span>
+            </div>`;
         summaryText += `- ${k}${qty}\n`;
     }
-    summaryDiv.innerHTML += `<h3 style="text-align:center">الإجمالي: ${total} ريال</h3>`;
 
-    function copyIBAN() {
-        const text = document.getElementById('iban-text').innerText;
-        navigator.clipboard.writeText(text);
-        alert("تم نسخ الآيبان ✅");
+    if (!hasItems) {
+        summaryDiv.innerHTML = `<p style="text-align:center; color:#777;">السلة فارغة، ارجع واختار سياراتك!</p>`;
     }
 
+    summaryDiv.innerHTML += `
+        <hr style="border:0.1px solid rgba(0,242,255,0.1); margin:15px 0;">
+        <div style="display:flex; justify-content:space-between; font-weight:900; font-size:1.4rem;">
+            <span>الإجمالي:</span>
+            <span style="color:var(--neon-blue)">${total} ريال</span>
+        </div>`;
+
+    // دالة نسخ الآيبان
+    function copyIBAN() {
+        const text = document.getElementById('iban-text').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("تم نسخ الآيبان.. بانتظار تحويلك يا بطل! ✅");
+        });
+    }
+
+    // دالة إنهاء الطلب والتحويل للواتساب
     function finishPayment() {
         const receiptFile = document.getElementById('receipt').files[0];
+        
+        if (total === "0") {
+            alert("سلتك فارغة يا وحش! ارجع للمتجر واختار خدماتك.");
+            return;
+        }
+        
         if (!receiptFile) {
-            alert("الرجاء إرفاق صورة الإيصال أولاً ⚠️");
+            alert("الرجاء إرفاق صورة الإيصال لإتمام العملية ⚠️");
             return;
         }
 
-        let msg = `مرحباً 8K SHOP\nتم تحويل المبلغ وجاهز للطلب:\n\n${summaryText}\nالإجمالي: ${total} ريال\n\n(سأقوم بإرفاق صورة الإيصال الآن)`;
+        let msg = `مرحباً 8K SHOP 🔥\n\nلقد قمت بتحويل المبلغ وهذا ملخص طلبي:\n${summaryText}\n💰 الإجمالي: ${total} ريال\n\n(سأرفق لك صورة الإيصال الآن)`;
         
-        // فتح الواتساب
-        window.open(`https://wa.me/966533702434?text=${encodeURIComponent(msg)}`, '_blank');
+        // فتح الواتساب برقمك
+        const whatsappURL = `https://wa.me/966533702434?text=${encodeURIComponent(msg)}`;
+        window.open(whatsappURL, '_blank');
     }
 </script>
+
 </body>
 </html>
